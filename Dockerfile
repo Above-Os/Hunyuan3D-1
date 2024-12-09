@@ -13,9 +13,9 @@ LABEL maintainer="YAN Wenkun <code@yanwk.fun>"
 
 RUN set -eu
 
-USER root
-VOLUME /root
-WORKDIR /root
+# USER root
+# VOLUME /root
+# WORKDIR /root
 
 COPY . .
 
@@ -34,7 +34,7 @@ python311-wheel \
 python311-setuptools \
 make \
 git \
-    && rm /usr/lib64/python3.12/EXTERNALLY-MANAGED \
+    && rm /usr/lib64/python3.11/EXTERNALLY-MANAGED \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 100
 
 ################################################################################
@@ -118,4 +118,4 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 
 EXPOSE 8080
 ENV CLI_ARGS=""
-CMD ["python3","/root/app.py --save_memory"]
+CMD ["python3","./app.py --save_memory"]
