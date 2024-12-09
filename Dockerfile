@@ -118,4 +118,4 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 
 EXPOSE 8080
 ENV CLI_ARGS=""
-CMD ["python3"," app.py.py --save_memory"]
+CMD ["python3","/root/app.py --save_memory"]
