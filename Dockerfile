@@ -28,14 +28,14 @@ RUN --mount=type=cache,target=/var/cache/zypp \
         'https://ftp.gwdg.de/pub/linux/misc/packman/suse/openSUSE_Tumbleweed/Essentials/' packman-essentials \
     && zypper --gpg-auto-import-keys \
         install --no-confirm --auto-agree-with-licenses \
-python312-devel \
-python312-pip \
-python312-wheel \
-python312-setuptools \
+python311-devel \
+python311-pip \
+python311-wheel \
+python311-setuptools \
 make \
 git \
     && rm /usr/lib64/python3.12/EXTERNALLY-MANAGED \
-    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 100
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 100
 
 ################################################################################
 # GCC 13 
@@ -63,20 +63,20 @@ cpp13 \
 # Python 包
 
 # 绑定环境变量 (依赖库 .so 文件)
-ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}\
-:/usr/local/lib64/python3.12/site-packages/torch/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
-:/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
+# ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}\
+# :/usr/local/lib64/python3.12/site-packages/torch/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
+# :/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
 
 # PyTorch, xFormers
 RUN --mount=type=cache,target=/root/.cache/pip \
