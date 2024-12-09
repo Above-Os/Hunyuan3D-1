@@ -85,7 +85,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN bash env_install.sh
 
-RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git && cd ../third_party/weights && wget https://download.europe.naverlabs.com/ComputerVision/DUSt3R/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth
+RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git && mkdir weights && cd weights && wget https://download.europe.naverlabs.com/ComputerVision/DUSt3R/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth
 
          
 
