@@ -33,7 +33,7 @@ jobs:
             - name: get latest tag
               uses: "WyriHaximus/github-action-get-previous-tag@v1"
               id: get-latest-tag
-              
+
             - name: Build and push
               uses: docker/build-push-action@v3
               env:
@@ -43,4 +43,4 @@ jobs:
                 file: ./Dockerfile
                 push: true
                 tags: beclab/hunyuan3d-1:${{env.TAG}}
-                platforms: linux/amd64
+                platforms: linux/amd64,linux/arm64

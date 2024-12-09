@@ -32,7 +32,6 @@ python311-devel \
 python311-pip \
 python311-wheel \
 python311-setuptools \
-make \
 git \
 wget \
     && rm /usr/lib64/python3.11/EXTERNALLY-MANAGED \
