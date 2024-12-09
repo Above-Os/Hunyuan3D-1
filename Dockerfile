@@ -32,6 +32,7 @@ python312-devel \
 python312-pip \
 python312-wheel \
 python312-setuptools \
+make \
 git \
     && rm /usr/lib64/python3.12/EXTERNALLY-MANAGED \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 100
@@ -40,26 +41,42 @@ git \
 # GCC 13 
 # 与 CUDA 12.4 兼容
 
-# RUN --mount=type=cache,target=/var/cache/zypp \
-#     zypper --gpg-auto-import-keys \
-#         install --no-confirm --auto-agree-with-licenses \
-# gcc13 \
-# gcc13-c++ \
-# cpp13 \
-#     && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-13 90 \
-#     && update-alternatives --install /usr/bin/cc  cc  /usr/bin/gcc-13 90 \
-#     && update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-13 90 \
-#     && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 90 \
-#     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 \
-#     && update-alternatives --install /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-13 90 \
-#     && update-alternatives --install /usr/bin/gcc-nm gcc-nm /usr/bin/gcc-nm-13 90 \
-#     && update-alternatives --install /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-13 90 \
-#     && update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-13 90 \
-#     && update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-13 90 \
-#     && update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-13 90 
+RUN --mount=type=cache,target=/var/cache/zypp \
+    zypper --gpg-auto-import-keys \
+        install --no-confirm --auto-agree-with-licenses \
+gcc13 \
+gcc13-c++ \
+cpp13 \
+    && update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-13 90 \
+    && update-alternatives --install /usr/bin/cc  cc  /usr/bin/gcc-13 90 \
+    && update-alternatives --install /usr/bin/cpp cpp /usr/bin/cpp-13 90 \
+    && update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-13 90 \
+    && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 \
+    && update-alternatives --install /usr/bin/gcc-ar gcc-ar /usr/bin/gcc-ar-13 90 \
+    && update-alternatives --install /usr/bin/gcc-nm gcc-nm /usr/bin/gcc-nm-13 90 \
+    && update-alternatives --install /usr/bin/gcc-ranlib gcc-ranlib /usr/bin/gcc-ranlib-13 90 \
+    && update-alternatives --install /usr/bin/gcov gcov /usr/bin/gcov-13 90 \
+    && update-alternatives --install /usr/bin/gcov-dump gcov-dump /usr/bin/gcov-dump-13 90 \
+    && update-alternatives --install /usr/bin/gcov-tool gcov-tool /usr/bin/gcov-tool-13 90 
 
 ################################################################################
 # Python 包
+
+# 绑定环境变量 (依赖库 .so 文件)
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}\
+:/usr/local/lib64/python3.12/site-packages/torch/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
+:/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
 
 # PyTorch, xFormers
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -72,21 +89,7 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 
          
 
-# 绑定环境变量 (依赖库 .so 文件)
-#ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}\
-#:/usr/local/lib64/python3.12/site-packages/torch/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_cupti/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_runtime/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cudnn/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cufft/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cublas/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cuda_nvrtc/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/curand/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cusolver/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/cusparse/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/nccl/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/nvjitlink/lib\
-# :/usr/local/lib/python3.12/site-packages/nvidia/nvtx/lib"
+
 
 
 # 1. 安装 ComfyUI 及扩展的依赖项
