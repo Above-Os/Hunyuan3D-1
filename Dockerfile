@@ -13,6 +13,10 @@ LABEL maintainer="YAN Wenkun <code@yanwk.fun>"
 
 RUN set -eu
 
+USER root
+VOLUME /root
+WORKDIR /root
+
 COPY . .
 
 ################################################################################
@@ -28,6 +32,7 @@ python312-devel \
 python312-pip \
 python312-wheel \
 python312-setuptools \
+git \
     && rm /usr/lib64/python3.12/EXTERNALLY-MANAGED \
     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 100
 
@@ -107,11 +112,7 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 # ENV HF_ENDPOINT="https://hf-mirror.com"
 
 ################################################################################
- 
 
-USER root
-VOLUME /root
-WORKDIR /root
 EXPOSE 8080
 ENV CLI_ARGS=""
 CMD ["python3"," app.py.py --save_memory"]
