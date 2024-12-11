@@ -110,7 +110,6 @@ RUN bash env_install.sh
 
 RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git && mkdir weights && cd weights && wget https://download.europe.naverlabs.com/ComputerVision/DUSt3R/DUSt3R_ViTLarge_BaseDecoder_512_dpt.pth
 
-         
 
 ################################################################################
 
