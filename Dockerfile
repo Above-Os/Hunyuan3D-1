@@ -92,7 +92,6 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 
 
 
-
 # 1. 安装 ComfyUI 及扩展的依赖项
 # 2. 处理 ONNX Runtime 报错 "missing CUDA provider"，并添加 CUDA 12 支持，参考： https://onnxruntime.ai/docs/install/
 # 3. 接上，处理 MediaPipe's 的依赖项错误（需要 protobuf<4）
