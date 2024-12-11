@@ -9,8 +9,6 @@
 
 FROM docker.io/opensuse/tumbleweed:latest
 
-LABEL maintainer="YAN Wenkun <code@yanwk.fun>"
-
 RUN set -eu
 
 # USER root
@@ -18,7 +16,6 @@ RUN set -eu
 # WORKDIR /root
 
 COPY . .
-
 
 ################################################################################
 # Python 及工具
