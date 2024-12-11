@@ -32,6 +32,7 @@ python311-devel \
 python311-pip \
 python311-wheel \
 python311-setuptools \
+make \
 git \
 wget \
     && rm /usr/lib64/python3.11/EXTERNALLY-MANAGED \
@@ -95,7 +96,22 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 # 1. 安装 ComfyUI 及扩展的依赖项
 # 2. 处理 ONNX Runtime 报错 "missing CUDA provider"，并添加 CUDA 12 支持，参考： https://onnxruntime.ai/docs/install/
 # 3. 接上，处理 MediaPipe's 的依赖项错误（需要 protobuf<4）
-
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install \
+        -r /builder-scripts/pak3.txt \
+    && pip install \
+        -r /builder-scripts/pak5.txt \
+    && pip install \
+        -r /builder-scripts/pak7.txt \
+    && pip uninstall --break-system-packages --yes \
+        onnxruntime-gpu \
+    && pip --no-cache-dir install --break-system-packages \
+        onnxruntime-gpu \
+        --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/ \
+        --extra-index-url https://pypi.org/simple \
+    && pip install \
+        mediapipe \
+    && pip list
 
 ################################################################################
 
@@ -118,4 +134,4 @@ RUN cd third_party && git clone --recursive https://github.com/naver/dust3r.git 
 
 EXPOSE 8080
 ENV CLI_ARGS=""
-CMD ["python3","./app.py --save_memory"]
+CMD ["python3", "app.py --save_memory"]
