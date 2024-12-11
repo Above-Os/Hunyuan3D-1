@@ -103,7 +103,7 @@ cpp13 \
 # PyTorch, xFormers
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip list \
-    && pip install onnxruntime-gpu \
+    && pip install onnxruntime-gpu --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/onnxruntime-cuda-12/pypi/simple/ \
     && pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
 RUN bash env_install.sh
